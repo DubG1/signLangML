@@ -1,4 +1,4 @@
-# sign_lang_ml
+# signLangML
 The Sign Language Dataset consists of 9680 grayscale images of hand signs for the digits 0-9 and the alphabets a-z. Thus, this is a multiclass classification problem with 36 classes. Your task is to build a machine learning model that can accurately classify images from this dataset
 
 The report template contains
