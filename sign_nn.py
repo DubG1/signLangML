@@ -4,23 +4,12 @@ from PIL import Image
 from torch import nn, save, load
 from torch.optim import Adam
 from torch.utils.data import DataLoader, Dataset
-from torchvision import transforms
 from torchvision.transforms import ToTensor
 
-import csv
 import pandas as pd
 import os
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-#i have 9000 images in the subfolder /data of this directory which are 128x128 pixels, the labels for the train data are in the csv and are integers and letters
-# the structure is as follows: label, image_name.jpg
-# example:
-# j,QSCBAHNQZVFRWGRF.jpg
-# j,FTYKTYLKVXPFFKFC.jpg
-# 4,YKFBHGYLSCBPEQTC.jpg
-# 4,TBJHTNEQYNZKHLGD.jpg
-# TODO: import the images, label them and transform them into tensors so i can give it to my neural network
 
 # Define the custom dataset class
 class CustomDataset(Dataset):
@@ -58,7 +47,6 @@ train = CustomDataset(label_csv_path, image_path, transform=ToTensor())
 
 # Create the data loader
 dataset = DataLoader(train, 32)
-print(len(dataset))
 
 
 # Image Classifier Neural Network
@@ -81,12 +69,12 @@ class ImageClassifier(nn.Module):
 
 # Instance of the neural network, loss, optimizer 
 clf = ImageClassifier().to(device)
-opt = Adam(clf.parameters(), lr=1e-3)
+opt = Adam(clf.parameters(), lr=0.00001)
 loss_fn = nn.CrossEntropyLoss() 
 
-print("starting training")
 # Training flow 
-if __name__ == "__main__": 
+if __name__ == "__main__":
+    print("Starting Training...")
     for epoch in range(10): # train for 10 epochs
         for batch in dataset:
             img, label = batch
@@ -99,15 +87,19 @@ if __name__ == "__main__":
             loss.backward()
             opt.step()
 
-        print(f"Epoch:{epoch} loss is {loss.item()}")
+        print(f"Epoch: {epoch}, Loss: {loss.item()}")
     
     with open('model_state.pt', 'wb') as f: 
-        save(clf.state_dict(), f) 
+        save(clf.state_dict(), f)
 
-    # with open('model_state.pt', 'rb') as f: 
-    #     clf.load_state_dict(load(f))  
 
-    # img = Image.open('img_3.jpg') 
-    # img_tensor = ToTensor()(img).unsqueeze(0).to('device')
+# Testing model
+    """
+    with open('model_state.pt', 'rb') as f: 
+        clf.load_state_dict(load(f))  
 
-    # print(torch.argmax(clf(img_tensor)))
+    img = Image.open('AYMTCOFMDTRGCXKO.jpg') 
+    img_tensor = ToTensor()(img).unsqueeze(0).to(device)
+
+    print(torch.argmax(clf(img_tensor)))
+    """
