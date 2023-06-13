@@ -7,6 +7,9 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader, Dataset
 from torchvision.transforms import ToTensor
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+print(f"Using {device} device")
 
 # Define a custom dataset class
 class SignLanguageDataset(Dataset):
@@ -37,7 +40,7 @@ class SignLanguageDataset(Dataset):
 
 
 # Get data
-train_dataset = SignLanguageDataset(csv_file='C:\\Users\\Remzi\Desktop\\4.Sem\\Maschinelles Lernen\\PS\\Projekt\\sign_lang_train\\csvFile\\labels.csv', root_dir='C:\\Users\\Remzi\Desktop\\4.Sem\\Maschinelles Lernen\\PS\\Projekt\\sign_lang_train\\',
+train_dataset = SignLanguageDataset(csv_file='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\labels.csv', root_dir='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\data',
                                     transform=ToTensor())
 dataset = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
@@ -62,16 +65,17 @@ class ImageClassifier(nn.Module):
 
 
 # Instance of the neural network, loss, optimizer
-clf = ImageClassifier().to('cpu')
+clf = ImageClassifier().to(device)
 opt = Adam(clf.parameters(), lr=1e-3)
 loss_fn = nn.CrossEntropyLoss()
 
 # Training flow
 if __name__ == "__main__":
+    """
     for epoch in range(10):  # train for 10 epochs
         for batch in dataset:
             X, y = batch
-            X, y = X.to('cpu'), y.to('cpu')
+            X, y = X.to(device), y.to(device)
             yhat = clf(X)
             loss = loss_fn(yhat, y)
 
@@ -83,3 +87,14 @@ if __name__ == "__main__":
         print(f"Epoch:{epoch} loss is {loss.item()}")
         with open('model_state.pt', 'wb') as f:
             save(clf.state_dict(), f)
+    """
+
+# Testing model
+    
+    with open('model_state.pt', 'rb') as f: 
+        clf.load_state_dict(load(f))  
+
+    img = Image.open('test\\SKXDYWAZZPCPBQWC.jpg') 
+    img_tensor = ToTensor()(img).unsqueeze(0).to(device)
+
+    print(torch.argmax(clf(img_tensor)))
