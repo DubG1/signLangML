@@ -13,14 +13,4 @@ trainning the model for the first time with learning rate 0.001, 10 epochs and b
 
 lr 0.00001, loss decreasing to ~0.6
 
-images for testing:
-HDXZZFGRJHJDDNVL.jpg
-l
-STTVUKNDDPXUZREU.jpg
-9
-SKXDYWAZZPCPBQWC.jpg
-g
-AYMTCOFMDTRGCXKO.jpg
-4
-LHZQOCZVLQLGONVF.jpg
-6
+added folders for images to test the model
