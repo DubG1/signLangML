@@ -11,10 +11,12 @@ import os
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+print(f"Using {device} device")
+
 # Define the custom dataset class
 class CustomDataset(Dataset):
     def __init__(self, csv_path, folder_path, transform=None):
-        self.data = pd.read_csv(csv_path)
+        self.data = pd.read_csv(csv_path, header=None)
         self.folder_path = folder_path
         self.transform = transform
 
@@ -73,6 +75,7 @@ opt = Adam(clf.parameters(), lr=0.00001)
 loss_fn = nn.CrossEntropyLoss() 
 
 # Training flow 
+
 if __name__ == "__main__":
     print("Starting Training...")
     for epoch in range(10): # train for 10 epochs
@@ -91,15 +94,15 @@ if __name__ == "__main__":
     
     with open('model_state.pt', 'wb') as f: 
         save(clf.state_dict(), f)
-
+"""
 
 # Testing model
-    """
+    
     with open('model_state.pt', 'rb') as f: 
         clf.load_state_dict(load(f))  
 
-    img = Image.open('AYMTCOFMDTRGCXKO.jpg') 
+    img = Image.open('STTVUKNDDPXUZREU.jpg') 
     img_tensor = ToTensor()(img).unsqueeze(0).to(device)
 
     print(torch.argmax(clf(img_tensor)))
-    """
+"""
