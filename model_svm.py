@@ -11,12 +11,13 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 # setting device
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#device = 'cuda' if torch.cuda.is_available() else 'cpu'
+device = 'cpu'
 print(f"Using {device} device")
 
 # prepare data
-root_dir='C:\\Users\\georg\\OneDrive\\Dokumente\\Studium_Windows\\signLangML\data'
-csv_file='C:\\Users\\georg\\OneDrive\\Dokumente\\Studium_Windows\\signLangML\\labels.csv'
+root_dir='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\data'
+csv_file='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\labels.csv'
 
 data = []
 labels = []
@@ -40,16 +41,25 @@ labels = np.asarray(labels)
 
 # train / test split
 x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, shuffle=True, stratify=labels)
+
+"""
 x_train = torch.from_numpy(x_train).to(device)
 y_train = torch.from_numpy(y_train).to(device)
 x_test = torch.from_numpy(x_test).to(device)
 y_test = torch.from_numpy(y_test).to(device)
+"""
 # train classifier
 classifier = SVC()
 
-parameters = [{'gamma': [0.01, 0.001, 0.0001], 'C': [1, 10, 100, 1000]}]
+parameters = [{'gamma': [0.01, 0.001], 'C': [1, 10]}]
 
-grid_search = GridSearchCV(classifier, parameters)
+grid_search = GridSearchCV(classifier, parameters, n_jobs=-1)
+
+"""
+# Move tensors back to CPU (needed if using cuda)
+x_train = x_train.cpu().numpy()
+y_train = y_train.cpu().numpy()
+"""
 
 grid_search.fit(x_train, y_train)
 
