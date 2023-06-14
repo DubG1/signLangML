@@ -9,8 +9,6 @@ this model can then be loaded and given an image.jpg and it outputs the give cla
 
 added CustomDataset class to merge the images and labels from the csv
 
-trainning the model for the first time with learning rate 0.001, 10 epochs and batch size 32, loss ends up staying around ~3.x so i guess the learning rate needs to be adjusted
+trainning the model for the first time with learning rate 0.001, 10 epochs and batch size 32, added folders for images to test the model, model is working fine and tested 6 classes with 3 tests each, but the model is too big with ~130mb 
 
-lr 0.00001, loss decreasing to ~0.6
-
-added folders for images to test the model
+model compressions is needed, pruning layers, quantize, pytroch compression, smaller architecture are available options
