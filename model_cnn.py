@@ -50,14 +50,14 @@ class ImageClassifier(nn.Module):
     def __init__(self):
         super().__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(1, 32, (3, 3)),
+            nn.Conv2d(1, 16, (3, 3)),
             nn.ReLU(),
-            nn.Conv2d(32, 64, (3, 3)),
+            nn.MaxPool2d((2, 2)),
+            nn.Conv2d(16, 32, (3, 3)),
             nn.ReLU(),
-            nn.Conv2d(64, 64, (3, 3)),
-            nn.ReLU(),
+            nn.MaxPool2d((2, 2)),
             nn.Flatten(),
-            nn.Linear(64 * 122 * 122, 36)  # Update the output size to 36 for 36 classes
+            nn.Linear(32 * 30 * 30, 36)  # Update the output size to 36 for 36 classes
         )
 
     def forward(self, x):
@@ -87,14 +87,14 @@ if __name__ == "__main__":
         print(f"Epoch:{epoch} loss is {loss.item()}")
         with open('model_state.pt', 'wb') as f:
             save(clf.state_dict(), f)
-    """
+        """
 
 # Testing model
-    
+
     with open('model_state.pt', 'rb') as f: 
         clf.load_state_dict(load(f))  
 
-    img = Image.open('test\\SKXDYWAZZPCPBQWC.jpg') 
+    img = Image.open('test\\a\\SAFTLJHDPNMPTZMJ.jpg') 
     img_tensor = ToTensor()(img).unsqueeze(0).to(device)
 
     print(torch.argmax(clf(img_tensor)))
