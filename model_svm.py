@@ -1,5 +1,6 @@
 import os
 import pickle
+import torch
 import pandas as pd
 from skimage.io import imread
 from skimage.transform import resize
@@ -9,10 +10,13 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
+# setting device
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f"Using {device} device")
 
 # prepare data
-root_dir='C:\\Users\\Remzi\Desktop\\4.Sem\\Maschinelles Lernen\\PS\\Projekt\\sign_lang_train\\'
-csv_file='C:\\Users\\Remzi\Desktop\\4.Sem\\Maschinelles Lernen\\PS\\Projekt\\sign_lang_train\\csvFile\\labels.csv'
+root_dir='C:\\Users\\georg\\OneDrive\\Dokumente\\Studium_Windows\\signLangML\data'
+csv_file='C:\\Users\\georg\\OneDrive\\Dokumente\\Studium_Windows\\signLangML\\labels.csv'
 
 data = []
 labels = []
@@ -36,7 +40,10 @@ labels = np.asarray(labels)
 
 # train / test split
 x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, shuffle=True, stratify=labels)
-
+x_train = torch.from_numpy(x_train).to(device)
+y_train = torch.from_numpy(y_train).to(device)
+x_test = torch.from_numpy(x_test).to(device)
+y_test = torch.from_numpy(y_test).to(device)
 # train classifier
 classifier = SVC()
 
