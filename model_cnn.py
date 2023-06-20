@@ -71,7 +71,7 @@ loss_fn = nn.CrossEntropyLoss()
 
 # Training flow
 if __name__ == "__main__":
-
+    """
     for epoch in range(10):  # train for 10 epochs
         for batch in dataset:
             X, y = batch
@@ -87,10 +87,9 @@ if __name__ == "__main__":
         print(f"Epoch:{epoch} loss is {loss.item()}")
         with open('model_state.pt', 'wb') as f:
             save(clf.state_dict(), f)
-
+    """
 
 # Testing model
-"""
     with open('model_state.pt', 'rb') as f: 
         clf.load_state_dict(load(f))  
 
@@ -98,4 +97,3 @@ if __name__ == "__main__":
     img_tensor = ToTensor()(img).unsqueeze(0).to(device)
 
     print(torch.argmax(clf(img_tensor)))
-"""
