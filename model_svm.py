@@ -16,8 +16,8 @@ device = 'cpu'
 print(f"Using {device} device")
 
 # prepare data
-root_dir='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\data'
-csv_file='C:\\Users\\Georg\\Documents\\Computer Science\\SS2023\\signLangML\\labels.csv'
+root_dir='.\\data'
+csv_file='.\\labels.csv'
 
 data = []
 labels = []
