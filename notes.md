@@ -14,3 +14,7 @@ trainning the model for the first time with learning rate 0.001, 10 epochs and b
 model compressions is needed, pruning layers, quantize, pytroch compression, smaller architecture are available options
 changed the architecture and reduced model size from 130mb to 4mb
 
+### Method 2
+
+SVM to solve the classification problem
+
