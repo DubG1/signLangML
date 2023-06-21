@@ -16,7 +16,7 @@ print(f"Using {device} device")
 
 # Prepare data
 root_dir = '../data'
-csv_file = './labels.csv'
+csv_file = '../data/labels.csv'
 
 label_img = pd.read_csv(csv_file, header=None)
 img_paths = [os.path.join(root_dir, img_name) for img_name in label_img.iloc[:, 1]]

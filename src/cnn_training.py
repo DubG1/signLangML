@@ -40,7 +40,7 @@ class SignLanguageDataset(Dataset):
 
 
 # Get data
-train_dataset = SignLanguageDataset(csv_file='.\\labels.csv', root_dir='..\\data',
+train_dataset = SignLanguageDataset(csv_file='..\\data\\labels.csv', root_dir='..\\data',
                                     transform=ToTensor())
 dataset = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
