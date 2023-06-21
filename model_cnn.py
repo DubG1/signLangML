@@ -87,9 +87,10 @@ if __name__ == "__main__":
         print(f"Epoch:{epoch} loss is {loss.item()}")
         with open('model_state.pt', 'wb') as f:
             save(clf.state_dict(), f)
-    """
+
 
 # Testing model
+"""
     with open('model_state.pt', 'rb') as f: 
         clf.load_state_dict(load(f))  
 
